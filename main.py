@@ -8,6 +8,9 @@ from Tools import user, product, search, history, Ultilities
 import numpy as np
 from Tools.create_print_file import print_bill
 
+import os
+
+
 now_id = None
 type_window = True
 
