@@ -30,7 +30,7 @@ def history(keyword):
     result = []
 
     if keyword == "-view-history":
-        for row in cur.execute("SELECT * FROM History ORDER BY id"):
+        for row in cur.execute("SELECT * FROM History ORDER BY id DESC"):
             result += row
 
     elif keyword == "-shift-working":

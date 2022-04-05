@@ -4,18 +4,6 @@ from Tools.Ultilities import get_last_id
 import numpy as np
 
 
-def test():
-    con = sqlite3.connect('data.db')
-    cur = con.cursor()
-    for row in cur.execute('SELECT * FROM Member ORDER BY id'):
-        print(row[0])
-
-    last = cur.execute('SELECT * FROM Member last_insert_rowid')
-    last = cur.getCount() - 1
-    print(last)
-    print(cur.moveToFirst())
-
-
 def add_member(name, username, password, birthday, position, phone_number, identification):
 
     conn = sqlite3.connect('data.db')

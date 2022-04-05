@@ -4,7 +4,6 @@ from Tools.Ultilities import get_last_id
 
 
 def add_history(id_bill, name, amount, price, discount, tax, seller, out_case=False, export=False, note=""):
-    from Tools import history
     from datetime import datetime
 
     conn = sqlite3.connect('data.db')
@@ -53,17 +52,15 @@ def detail_bill(id_bill):
     return result
 
 
-def detail_bill(id_bill):
-    con = sqlite3.connect('data.db')
-    cur = con.cursor()
-    result = []
-    for row in cur.execute("SELECT * FROM History WHERE id_bill LIKE '" + id_bill + "'"):
-        result += row
+def shift_case(id):
+    conn = sqlite3.connect('data.db')
 
-    result = np.array(result)
-    result = result.reshape(-1, 13)
+    query = "UPDATE History SET out_case=True WHERE ID=" + str(id)
 
-    return result
+    conn.execute(query)
+    conn.commit()
+    conn.close()
+    return "Update successful"
 
 
 def bill_in_date(date):
@@ -91,7 +88,32 @@ def bill_in_case():
 
     return result
 
-# def bill_in_year():
+
+def bill_in_time_custom(y_s, m_s, d_s, y_e, m_e, d_e, h_s=None, mn_s=None, h_e=None, mn_e=None):
+    con = sqlite3.connect('data.db')
+    cur = con.cursor()
+    history_data = []
+
+    for row in cur.execute("SELECT * FROM History ORDER BY id"):
+        time_start = y_s * 31 * 12 + m_s * 31 + d_s
+        time_end = y_e * 31 * 12 + m_e * 31 + d_e
+        time_row = int(row[2][0:4]) * 31 * 12 + int(row[2][5:7]) * 31 + int(row[2][8:10])
+
+        if (time_row >= time_start) and (time_row <= time_end):
+            if h_s is None:
+                history_data += row
+            else:
+                time_start = time_start * 3600 + int(h_s) * 60 + int(mn_s)
+                time_end = time_end * 3600 + int(h_e) * 60 + int(mn_e)
+                time_row = time_row * 3600 + int(row[1][0:2]) * 60 + int(row[1][3:5])
+
+                if (time_row >= time_start) and (time_row <= time_end):
+                    history_data += row
+
+    history_data = np.array(history_data)
+    history_data = history_data.reshape(-1, 13)
+
+    return history_data
 
 
 def search(keyword):

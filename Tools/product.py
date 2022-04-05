@@ -57,11 +57,23 @@ def export_product(id, amount, add):
     return "Update successful"
 
 
+def change_information_product(id, type_change, value_change):
+    conn = sqlite3.connect('data.db')
+
+    query = "UPDATE Products SET " + type_change + "='" + str(value_change) + "' WHERE ID=" + str(id)
+
+    conn.execute(query)
+    conn.commit()
+    conn.close()
+    return "Update successful"
+
+
 def search(keyword):
-    con = sqlite3.connect('../data.db')
+    con = sqlite3.connect('data.db')
     cur = con.cursor()
     result = []
     for row in cur.execute("SELECT * FROM Products WHERE name LIKE '%" + keyword + "%'"):
         result += row
-
+    con.commit()
+    con.close()
     return result

@@ -37,7 +37,12 @@ def get_id_bill():
     if number == 0:
         id_bill = str(date.year) + str(mm) + str(dd) + str(number)
     else:
-        for row in cur.execute('SELECT * FROM History ORDER BY id DESC LIMIT 1'):
-            id_bill = int(row[3]) + 1
+        for row in cur.execute('SELECT * FROM History ORDER BY id DESC'):
+            if row[3] not in {"Import", "Export"}:
+                if row[2] == str(date.year) + "-" + str(mm) + "-" + str(dd):
+                    id_bill = int(row[3]) + 1
+                    return id_bill
+    number = 0
+    id_bill = str(date.year) + str(mm) + str(dd) + str(number)
     return id_bill
 
