@@ -1,6 +1,6 @@
 import sqlite3
 import os
-from Tools.Ultilities import get_last_id
+from Ultilities import get_last_id
 
 
 def add_product(name, retail_price, cost_price):

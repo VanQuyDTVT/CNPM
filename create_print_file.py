@@ -247,10 +247,10 @@ def print_bill(data, id_bill, tax=0, discount=0):
     page_layout.add(_line_())
     page_layout.add(_thank_you_())
 
-    with open("output.pdf", "wb") as pdf_file_handle:
+    with open(".output.pdf", "wb") as pdf_file_handle:
         PDF.dumps(pdf_file_handle, pdf)
 
-    # os.system("output.pdf")
+    os.startfile(".output.pdf")
     # os.remove("output.pdf")
 
 
@@ -266,10 +266,10 @@ def print_bill_shift_working(data, tax=0, discount=0, title="SHIFT WORKING"):
     page_layout.add(_build_())
     page_layout.add(_build_itemized_description_table(data, tax, discount, code=1))
 
-    with open("output.pdf", "wb") as pdf_file_handle:
+    with open(".output.pdf", "wb") as pdf_file_handle:
         PDF.dumps(pdf_file_handle, pdf)
 
-    # os.system("output.pdf")
+    os.startfile(".output.pdf")
     # os.remove("output.pdf")
 
 
@@ -288,9 +288,9 @@ def print_transfer_bill(data, note):
     page_layout.add(_build_itemized_description_table(data, tax=0, discount=0, code=2))
     page_layout.add(_line_())
 
-    with open("output.pdf", "wb") as pdf_file_handle:
+    with open(".output.pdf", "wb") as pdf_file_handle:
         PDF.dumps(pdf_file_handle, pdf)
-    # os.system("output.pdf")
+    os.startfile(".output.pdf")
     # os.remove("output.pdf")
 
 
@@ -309,7 +309,7 @@ def print_wholesales_bill(data, note):
     page_layout.add(_build_itemized_description_table(data, tax=0, discount=0, code=3))
     page_layout.add(_line_())
 
-    with open("output.pdf", "wb") as pdf_file_handle:
+    with open(".output.pdf", "wb") as pdf_file_handle:
         PDF.dumps(pdf_file_handle, pdf)
-    # os.system("output.pdf")
+    os.startfile(".output.pdf")
     # os.remove("output.pdf")

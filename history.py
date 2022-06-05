@@ -1,6 +1,6 @@
 import sqlite3
 import numpy as np
-from Tools.Ultilities import get_last_id
+from Ultilities import get_last_id
 
 
 def add_history(id_bill, name, amount, price, discount, tax, seller, out_case=False, export=False, note=""):

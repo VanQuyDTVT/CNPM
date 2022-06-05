@@ -7,6 +7,7 @@ from PyQt5.QtGui import QIcon, QColor, QPixmap
 from PyQt5.QtCore import QEvent, QPoint, pyqtSignal, Qt, QDir, QSize
 from PyQt5.QtWidgets import QMainWindow, QLineEdit, QGraphicsDropShadowEffect, QSizeGrip, \
     QTableWidgetItem, QAbstractScrollArea, QFileDialog, QLabel, QApplication, QStackedWidget
+
 import search
 import Ultilities
 import product
@@ -15,7 +16,6 @@ import history
 from create_print_file import print_bill, print_bill_shift_working, print_transfer_bill, print_wholesales_bill
 from datetime import datetime
 from PIL import Image, ImageDraw
-# from ui_Login import *
 
 now_id = None
 type_window = True
@@ -114,7 +114,6 @@ class LoginScreen(QMainWindow):
         self.pressing = None
         self.start = None
         loadUi("./GUI/Login.ui", self)
-        # Ui_mainWindow.setupUi(self)
 
         self.password.setEchoMode(QLineEdit.Password)
 
@@ -194,7 +193,7 @@ class LoginScreen(QMainWindow):
         elif widget_name == self.no_btn and event.type() == QEvent.HoverEnter:
             widget_name.setIcon(QIcon("./icons/x-dark_blue.svg"))
             self.icon_emotion.setPixmap(QPixmap('./Image/happy.png'))
-            self.label_3.setText("Welcome")
+            self.label_3.setText("Stay")
         elif widget_name == self.no_btn and event.type() == QEvent.HoverLeave:
             widget_name.setIcon(QIcon("./icons/x-black.svg"))
             self.icon_emotion.setPixmap(QPixmap('./Image/sad.png'))
@@ -706,6 +705,10 @@ class ViewStockScreen(QMainWindow):
         self.tableWidget.setColumnWidth(4, 100)
         self.tableWidget.setColumnWidth(5, 100)
 
+        if user.find_id(now_id)[5] != "Manager":
+            self.confirm_btn.setHidden(True)
+            self.cancel_btn.setHidden(True)
+
         self.confirm_btn.clicked.connect(self.__confirm_edit)
         self.cancel_btn.clicked.connect(self.__cancel_edit)
 
@@ -765,10 +768,6 @@ class ViewStockScreen(QMainWindow):
         self.will_change = True
         self.load_data(data=self.data_update)
         self.will_change = False
-
-        if user.find_id(now_id)[5] != "Manager":
-            self.confirm_btn.setHidden(True)
-            self.cancel_btn.setHidden(True)
 
     def log_change(self, item):
         if not self.will_change:
